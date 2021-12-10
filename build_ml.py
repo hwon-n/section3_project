@@ -28,36 +28,22 @@ train, val = train_test_split(train, test_size = 0.2, random_state=42)
 
 
 # Tag 열 전처리 위해서 55개 이상의 Tag 목록 만들기
-over_50_Tag = train['Tag'].value_counts() >= 50
-over_50 = over_50_Tag.to_frame()
-true_over = over_50.loc[(over_50.Tag == True)]
-true_over = true_over.reset_index()
-condition = true_over['index'].values.tolist()
+over_40_Tag = train['Tag'].value_counts() >= 40
+over_40 = over_40_Tag.to_frame()
+over = over_40.loc[(over_40.Tag == True)]
+over = over.reset_index()
+condition = over['index'].values.tolist()
 
 # Tag_list = ['Singleplayer', 'Full controller support', 'RPG', '2D', 'exclusive', 'Partial Controller Support', 'Co-op', 'Horror', 'Multiplayer']
 Tag_list = condition[:9]
 
 # 데이터 전처리 위한 list
-platform_list = ['Commodore / Amiga', 'SEGA', 'Web', 'Neo Geo']
-Genre_list = ['Racing', 'Arcade', 'Sports', 'Platformer', 'Massively Multiplayer', 'Family', 'Fighting', 'no genre', 'Board Games', 'Card', 'Educational']
-
-def platform(p):
-    if p == 'iOS' or p == 'Android':
-        return 'Mobile'
-    elif p in platform_list:
-        return 'other'
-    elif p in ['Nintendo', 'PlayStation', 'Xbox']:
-        return 'Video/Console'
-    elif p == 'Apple Macintosh':
-        return p
-    else:
-        return 'PC'
+Genre_list = ['Action', 'Indie', 'Adventure', 'RPG', 'Strategy', 'Casual', 'Simulation', 'Shooter']
 
 
 def engineer(df):
     df.Tag = df.Tag.apply(lambda x: x if x in Tag_list else 'other')
-    df.Platform = df.Platform.apply(platform)
-    df.Genres = df.Genres.apply(lambda x: 'other' if x in Genre_list else x)
+    df.Genres = df.Genres.apply(lambda x: x if x in Genre_list else 'other')
     df = df.reset_index(drop=True)
 
     return df
@@ -76,7 +62,9 @@ y_val = val[target]
 X_test = test.drop(target, axis=1)
 y_test = test[target]
 
-encoder_list = ['Platform', 'Genres', 'Tag', 'Esrb_rating']
+
+
+encoder_list = ['Platform', 'Genres', 'Tag', 'Esrb_rating', 'Stores']
 
 # multiple linear regression
 # linear_pipe = make_pipeline(
@@ -95,33 +83,35 @@ encoder_list = ['Platform', 'Genres', 'Tag', 'Esrb_rating']
 # mae = mean_absolute_error(y_val, y_pred)
 # r2 = r2_score(y_val, y_pred)
 
+# print('Multiple Linear Regressor\n')
 # print('Training score: ', linear_pipe.score(X_train, y_train)) # 0.15212
 # print('Validation score: ', linear_pipe.score(X_val, y_val)) # 0.10359
-# print(f'MSE: {mse:.1f}\nRMSE: {rmse:.1f}\nMAE: {mae:.1f}\nR2: {r2:.1f}') # 1786127.8, 1336.5, 839.5, 0.1
+# print(f'MSE: {mse:.5f}\nRMSE: {rmse:.5f}\nMAE: {mae:.5f}\nR2: {r2:.5f}') # 1786127.8, 1336.5, 839.5, 0.1
 
 
 # randomforest model\
 
 
-rf_pipe = make_pipeline(
-    TargetEncoder(cols = encoder_list),
-    SimpleImputer(),
-    StandardScaler(),
-    RandomForestRegressor(random_state=42)
-)
+# rf_pipe = make_pipeline(
+#     TargetEncoder(cols = encoder_list),
+#     SimpleImputer(),
+#     StandardScaler(),
+#     RandomForestRegressor(random_state=42)
+# )
 
-rf_pipe.fit(X_train, y_train)
-y_pred = rf_pipe.predict(X_val)
+# rf_pipe.fit(X_train, y_train)
+# y_pred = rf_pipe.predict(X_val)
 
 
-mse = mean_squared_error(y_val, y_pred)
-rmse = mse ** 0.5
-mae = mean_absolute_error(y_val, y_pred)
-r2 = r2_score(y_val, y_pred)
+# mse = mean_squared_error(y_val, y_pred)
+# rmse = mse ** 0.5
+# mae = mean_absolute_error(y_val, y_pred)
+# r2 = r2_score(y_val, y_pred)
 
-print('Training score: ', rf_pipe.score(X_train, y_train))
-print('Validation score: ', rf_pipe.score(X_val, y_val))
-print(f'MSE: {mse:.4f}\nRMSE: {rmse:.4f}\nMAE: {mae:.4f}\nR2: {r2:.4f}')
+# print('RandomForests Regressor\n')
+# print('Training score: ', rf_pipe.score(X_train, y_train))
+# print('Validation score: ', rf_pipe.score(X_val, y_val))
+# print(f'MSE: {mse:.5f}\nRMSE: {rmse:.5f}\nMAE: {mae:.5f}\nR2: {r2:.5f}')
 
 # for i in list(range(2, 11)):
 #     scores = cross_val_score(rf_pipe, X_train, y_train, cv = i, scoring = 'neg_root_mean_squared_error')
@@ -139,15 +129,15 @@ dists = {
     'randomforestregressor__max_features': ['auto', 'sqrt', 'log2']
 }
 
-clf = RandomizedSearchCV(
-    rf_pipe,
-    param_distributions = dists,
-    n_iter = 5,
-    cv = 10,
-    verbose = 1,
-    scoring = 'neg_root_mean_squared_error',
-    n_jobs = -1
-)
+# clf = RandomizedSearchCV(
+#     rf_pipe,
+#     param_distributions = dists,
+#     n_iter = 5,
+#     cv = 9,
+#     verbose = 1,
+#     scoring = 'neg_root_mean_squared_error',
+#     n_jobs = -1
+# )
 
 # clf.fit(X_train, y_train)
 
@@ -159,11 +149,12 @@ new_rf_pipe = make_pipeline(
     SimpleImputer(),
     StandardScaler(),
     RandomForestRegressor(
-        n_estimators = 300,
-        min_samples_split = 6,
+        n_estimators = 200,
+        min_samples_split = 2,
         min_samples_leaf = 8,
         max_features = 'sqrt',
-        criterion ='squared_error',
+        max_depth = 11,
+        criterion ='absolute_error',
         random_state = 42
     )
 )
@@ -179,4 +170,4 @@ r2 = r2_score(y_val, y_pred)
 
 print('Training score: ', new_rf_pipe.score(X_train, y_train))
 print('Validation score: ', new_rf_pipe.score(X_val, y_val))
-print(f'MSE: {mse:.4f}\nRMSE: {rmse:.4f}\nMAE: {mae:.4f}\nR2: {r2:.4f}') # r2 score: 0.239로 좋아하는 내가 참 싫다
+print(f'MSE: {mse:.5f}\nRMSE: {rmse:.5f}\nMAE: {mae:.5f}\nR2: {r2:.5f}') 
