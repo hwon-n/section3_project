@@ -1,11 +1,9 @@
-from private import API_KEY
+from flask_app.private import API_KEY
 import requests
 import json
 import pandas as pd
 import os
 from random import randint
-
-from flask_app.test import CSV_FILEPATH
 
 
 BASE_URL = 'https://api.rawg.io/api/games?key='
