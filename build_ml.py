@@ -3,17 +3,15 @@
 import os
 import pandas as pd
 from sklearn.model_selection import train_test_split, cross_val_score, RandomizedSearchCV
-from lightgbm import LGBMRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
-from category_encoders.count import CountEncoder
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-from category_encoders import OneHotEncoder
-from category_encoders.cat_boost import CatBoostEncoder
+from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import make_pipeline, Pipeline
-from sklearn.metrics import accuracy_score, r2_score, f1_score, mean_absolute_error, mean_squared_error, classification_report, roc_auc_score, plot_confusion_matrix
+from sklearn.metrics import accuracy_score, r2_score,  mean_absolute_error, mean_squared_error
 from category_encoders.target_encoder import TargetEncoder
+
+import pickle
 
 
 CSV_FILENAME = 'Games.csv'
@@ -171,3 +169,8 @@ r2 = r2_score(y_val, y_pred)
 print('Training score: ', new_rf_pipe.score(X_train, y_train))
 print('Validation score: ', new_rf_pipe.score(X_val, y_val))
 print(f'MSE: {mse:.5f}\nRMSE: {rmse:.5f}\nMAE: {mae:.5f}\nR2: {r2:.5f}') 
+
+with open('model.pkl', 'wb') as pickle_file:
+    pickle.dump(new_rf_pipe, pickle_file)
+
+print("피클링 완료!")
