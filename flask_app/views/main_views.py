@@ -5,12 +5,14 @@ import pandas as pd
 import pickle
 import os
 
+
 main_bp = Blueprint('main', __name__)
 
 
 # 모델 준비
 FILENAME = 'model.pkl'
 MODEL_PATH = os.path.abspath(os.path.join(os.getcwd(), FILENAME))
+
 
 
 # MongoDB 연결 준비
@@ -52,3 +54,4 @@ def index():
         db = client[DATABASE_NAME][COLLECTION_NAME].insert_one(dict)
         
         return render_template('index.html', result=y_pred), 200
+

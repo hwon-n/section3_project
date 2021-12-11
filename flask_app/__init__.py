@@ -1,6 +1,4 @@
-from flask import Flask, render_template, request
-
-
+from flask import Flask
 
 
 def create_app():
