@@ -1,5 +1,3 @@
-# LightGBM 찾아보기
-
 import os
 import pandas as pd
 from sklearn.model_selection import train_test_split, cross_val_score, RandomizedSearchCV

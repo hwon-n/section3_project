@@ -1,5 +1,6 @@
 import os
 import csv
+import sqlite3
 from flask_app.private import MONGO_PW
 from pymongo import MongoClient
 
@@ -24,3 +25,4 @@ with open(CSV_FILEPATH, 'r') as csv_file:
     #MongoDB에 데이터 삽입
     client = MongoClient(MONGO_URI)
     db = client[DATABASE_NAME][COLLECTION_NAME].insert_many(dict)
+    

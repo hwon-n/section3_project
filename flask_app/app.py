@@ -5,8 +5,10 @@ import pandas as pd
 import pickle
 import os
 
+
 FILENAME = 'model.pkl'
 MODEL_PATH = os.path.join(os.pardir, FILENAME)
+
 
 # MongoDB 연결 준비
 HOST = 'cluster0.qlmif.mongodb.net'
@@ -42,7 +44,8 @@ def index():
         
         y_pred = int(model.predict(X_test))
         
-        # 예측 결과 MongoDB에 저장
+        # 예측 결과 포함해 MongoDB에 저장
+        X_test['Added'] = y_pred
         dict = X_test.loc[0].to_dict()
         client = MongoClient(MONGO_URI)
         db = client[DATABASE_NAME][COLLECTION_NAME].insert_one(dict)
