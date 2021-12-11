@@ -53,8 +53,6 @@ def index():
         return render_template('index.html', result=y_pred), 200
         
         
-    
-
 if __name__ == "__main__":
     app.run(debug=True)
 

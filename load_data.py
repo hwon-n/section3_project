@@ -69,7 +69,6 @@ for i in range(1, 401):
         # df에 데이터 삽입
         Game_info = Game_info.append(pd.Series(da_list, index=Game_info.columns), ignore_index=True)
 
-
 Game_info.to_csv(CSV_FILEPATH, sep=',', index=False)
 
 print('CSV 생성 완료!')

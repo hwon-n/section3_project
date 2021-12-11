@@ -25,4 +25,3 @@ with open(CSV_FILEPATH, 'r') as csv_file:
     #MongoDB에 데이터 삽입
     client = MongoClient(MONGO_URI)
     db = client[DATABASE_NAME][COLLECTION_NAME].insert_many(dict)
-    
