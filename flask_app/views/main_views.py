@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request
 from pymongo import MongoClient
+from flask_app.private import MONGO_PW
 import pandas as pd
 import pickle
 import os
@@ -15,7 +16,7 @@ MODEL_PATH = os.path.abspath(os.path.join(os.getcwd(), FILENAME))
 # MongoDB 연결 준비
 HOST = 'cluster0.qlmif.mongodb.net'
 USER = 'hyewon'
-PASSWORD = 'gpdnjs1234'
+PASSWORD = MONGO_PW
 DATABASE_NAME = 'Game'
 COLLECTION_NAME = 'apiResult'
 MONGO_URI = f"mongodb+srv://{USER}:{PASSWORD}@{HOST}/{DATABASE_NAME}?retryWrites=true&w=majority"
