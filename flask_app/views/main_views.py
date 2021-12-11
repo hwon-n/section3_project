@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request
-from flask_app.private import MONGO_PW
 from pymongo import MongoClient
 import pandas as pd
 import pickle
