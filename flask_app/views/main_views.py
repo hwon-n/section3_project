@@ -1,13 +1,16 @@
-from flask import Flask, render_template, request
-from private import MONGO_PW
+from flask import Blueprint, render_template, request
+from flask_app.private import MONGO_PW
 from pymongo import MongoClient
 import pandas as pd
 import pickle
 import os
 
+main_bp = Blueprint('main', __name__)
 
+
+# 모델 준비
 FILENAME = 'model.pkl'
-MODEL_PATH = os.path.join(os.pardir, FILENAME)
+MODEL_PATH = os.path.abspath(os.path.join(os.getcwd(), FILENAME))
 
 
 # MongoDB 연결 준비
@@ -19,9 +22,7 @@ COLLECTION_NAME = 'apiResult'
 MONGO_URI = f"mongodb+srv://{USER}:{PASSWORD}@{HOST}/{DATABASE_NAME}?retryWrites=true&w=majority"
 
 
-app = Flask(__name__)
-
-@app.route('/', methods=['POST', 'GET'])
+@main_bp.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'GET':
         return render_template('index.html'), 200
@@ -51,9 +52,3 @@ def index():
         db = client[DATABASE_NAME][COLLECTION_NAME].insert_one(dict)
         
         return render_template('index.html', result=y_pred), 200
-        
-        
-if __name__ == "__main__":
-    app.run(debug=True)
-
-
