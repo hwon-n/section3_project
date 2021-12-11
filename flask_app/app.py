@@ -19,9 +19,9 @@ COLLECTION_NAME = 'apiResult'
 MONGO_URI = f"mongodb+srv://{USER}:{PASSWORD}@{HOST}/{DATABASE_NAME}?retryWrites=true&w=majority"
 
 
-app = Flask(__name__)
+APP = Flask(__name__)
 
-@app.route('/', methods=['POST', 'GET'])
+@APP.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'GET':
         return render_template('index.html'), 200
@@ -54,6 +54,6 @@ def index():
         
         
 if __name__ == "__main__":
-    app.run(debug=True)
+    APP.run(debug=True)
 
 
