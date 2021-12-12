@@ -18,65 +18,69 @@
         <title>PG(Predict the Game)</title>
     </head>
     <body>
-        <form action="/" method="POST">
-            <p style="margin: 0">게임 플레이 시간</p>
-            <p style="font-size: 9pt">플레이 시간이 1시간 이하일 경우는 0 입력</p>
-            <input type="number" name="Playtime" min="0" style="margin-bottom: 10px"/>
+        <div style="float: left; margin-left: 20px">
+            <form action="/" method="POST">
+                <p style="margin: 0">게임 플레이 시간</p>
+                <p style="font-size: 9pt">플레이 시간이 1시간 이하일 경우는 0 입력</p>
+                <input type="number" name="Playtime" min="0" style="margin-bottom: 10px"/>
 
-            <p style="margin: 0">게임 출시 플랫폼의 수</p>
-            <p style="font-size: 9pt">ex) Nintendo Switch, Xbox => 2 입력</p>
-            <input type="number" name="Platform" min="0" style="margin-bottom: 10px"/>
-
-
-            <p>게임 장르 선택</p>
-            <select class="form-select" aria-label="Default select example" style="margin-bottom: 10px" name="Genres">
-                <option selected>Choose a Genre</option>
-                <option value="Action">Action</option>
-                <option value="Indie">Indie</option>
-                <option value="RPG">RPG</option>
-                <option value="Strategy">Strategy</option>
-                <option value="Casual">Casual</option>
-                <option value="Simulation">Simulation</option>
-                <option value="Shooter">Shooter</option>
-                <option value="Other">Other Genre</option>
-            </select>
+                <p style="margin: 0">게임 출시 플랫폼의 수</p>
+                <p style="font-size: 9pt">ex) Nintendo Switch, Xbox => 2 입력</p>
+                <input type="number" name="Platform" min="0" style="margin-bottom: 10px"/>
 
 
-            <p>게임을 출시할 예정 상점 수</p>
-            <input type="number" name="Stores" min="0"/>
+                <p>게임 장르 선택</p>
+                <select class="form-select" aria-label="Default select example" style="margin-bottom: 10px" name="Genres">
+                    <option selected>Choose a Genre</option>
+                    <option value="Action">Action</option>
+                    <option value="Indie">Indie</option>
+                    <option value="RPG">RPG</option>
+                    <option value="Strategy">Strategy</option>
+                    <option value="Casual">Casual</option>
+                    <option value="Simulation">Simulation</option>
+                    <option value="Shooter">Shooter</option>
+                    <option value="Other">Other Genre</option>
+                </select>
 
 
-            <p>게임 소개 태그 선택</p>
-            <select class="form-select" aria-label="Default select example" name="Tag">
-                <option selected>Choose a Tag</option>
-                <option value="Steam Achievements">Steam Achievements</option>
-                <option value="Multiplayer">Multiplayer</option>
-                <option value="steam-trading-cards">Steam Tranding Card</option>
-                <option value="Atmospheric">Atmospheric</option>
-                <option value="exclusive">Exclusive</option>
-                <option value="RPG">RPG</option>
-                <option value="Full controller support">Full controller support</option>
-                <option value="Steam Cloud">Steam Cloud</option>
-                <option value="other">Other</option>
-            </select>
+                <p>게임을 출시할 예정 상점 수</p>
+                <input type="number" name="Stores" min="0"/>
 
 
-            <p>게임 연령가 선택</p>
-            <select class="form-select" aria-label="Default select example" name="Esrb_rating">
-                <option selected>Choose a Age info</option>
-                <option value="Everyone">Everyone</option>
-                <option value="Everyone 10+">Everyone 10+</option>
-                <option value="Teen">Teen</option>
-                <option value="Mature">Mature</option>
-                <option value="Adults Only">Adults Only</option>
-                <option value="No age info">No age info</option>
-            </select>
+                <p>게임 소개 태그 선택</p>
+                <select class="form-select" aria-label="Default select example" name="Tag">
+                    <option selected>Choose a Tag</option>
+                    <option value="Steam Achievements">Steam Achievements</option>
+                    <option value="Multiplayer">Multiplayer</option>
+                    <option value="steam-trading-cards">Steam Tranding Card</option>
+                    <option value="Atmospheric">Atmospheric</option>
+                    <option value="exclusive">Exclusive</option>
+                    <option value="RPG">RPG</option>
+                    <option value="Full controller support">Full controller support</option>
+                    <option value="Steam Cloud">Steam Cloud</option>
+                    <option value="other">Other</option>
+                </select>
 
-            <input type="submit" value="예측하기">
-        </form>
 
-        {% if result %}
-            <h1>{{ result }}명이 관심을 가질 것으로 예상됩니다. </h1>
-        {% endif %}
+                <p>게임 연령가 선택</p>
+                <select class="form-select" aria-label="Default select example" name="Esrb_rating">
+                    <option selected>Choose a Age info</option>
+                    <option value="Everyone">Everyone</option>
+                    <option value="Everyone 10+">Everyone 10+</option>
+                    <option value="Teen">Teen</option>
+                    <option value="Mature">Mature</option>
+                    <option value="Adults Only">Adults Only</option>
+                    <option value="No age info">No age info</option>
+                </select>
+
+                <input type="submit" value="예측하기" style="margin: 20px">
+            </form>
+        </div>
+        <div style="float:left; text-align: center; margin: 50px;">
+            {% if result %}
+                <h1>{{ result }}명이</h1>
+                <h2>관심을 가질 것으로 예상됩니다. </h2>
+            {% endif %}
+        </div>
     </body>
 </html>
