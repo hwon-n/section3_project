@@ -1,14 +1,13 @@
 import os
 import csv
 import sqlite3
-from flask_app.private import MONGO_PW
 from pymongo import MongoClient
 
 
 # MongoDB 연결 준비
 HOST = 'cluster0.qlmif.mongodb.net'
 USER = 'hyewon'
-PASSWORD = MONGO_PW
+PASSWORD = 'gpdnjs1234'
 DATABASE_NAME = 'Game'
 COLLECTION_NAME = 'games'
 MONGO_URI = f"mongodb+srv://{USER}:{PASSWORD}@{HOST}/{DATABASE_NAME}?retryWrites=true&w=majority"
