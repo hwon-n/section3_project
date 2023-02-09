@@ -32,7 +32,7 @@
 
 <br />
 
-## 전체적인 Pipeline
+## 🧷 전체적인 Pipeline
 
 ![image](https://user-images.githubusercontent.com/52039588/217835791-d508cc2c-55e0-4e18-92a9-40aa9e8ac9c9.png)
 
@@ -49,7 +49,7 @@
 
 ## 🗃 사용 데이터
 
-[RAWG API](https://api.rawg.io/docs/)를 사용해서 게임 리스트를 받아와 데이터로 사용했다.
+[RAWG API](https://api.rawg.io/docs/)를 사용해서 게임 리스트를 받아와 데이터로 사용했습니다.
 
 <br />
 
@@ -68,8 +68,31 @@
 <br />
 
   
-## 🔎 주요 기능
+## 🔎 주요 내용
 
+
+### 웹 페이지 구현
+
+![image](https://user-images.githubusercontent.com/52039588/217909682-d3024576-d714-4b62-9a2b-12ec5345d4dc.png)
+
+
+### 데이터 적재하기
+
+API를 사용해 데이터를 csv 파일로 저장해 준 뒤 전처리를 진행해 주었습니다. 그리고 전처리가 완료된 데이터들을 다시 mongoDB에 적재해 주었습니다. mongoDB에 적재한 이유는 metabase를 사용해서 쉽게 데이터 분석을 하기 위해서입니다. 
+
+그리고 사용자에게서 데이터를 입력받아서 머신러닝 모델이 예측을 한 결과도 mongoDB에 저장해주었습니다. MongoDB에 저장한 뒤 어떠한 결과가 제일 많이 나왔는지에 대해서도 한번 살펴보았습니다. 
+
+
+<br />
+
+### metabase
+
+
+
+
+### 회고글
+
+[Section3 Project 회고](https://velog.io/@woooa/AIB7-Section3-project-%ED%9A%8C%EA%B3%A0)를 velog에 올려놨습니다. 프로젝트를 진행하면서 겪었던 자잘하고 사소한 일들과 그에 대한 아쉬움을 기록한 글입니다. 
 
 
 <br />
